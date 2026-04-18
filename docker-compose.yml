@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: bigdata_trino_postgres
+    environment:
+      POSTGRES_DB: bigdata
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "15432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
+      - ./data:/data
+    networks:
+      - bigdata_net
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.3
+    container_name: bigdata_trino_clickhouse
+    ports:
+      - "18123:8123"
+      - "19000:9000"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./clickhouse/init:/docker-entrypoint-initdb.d
+      - ./data:/data
+    networks:
+      - bigdata_net
+
+  trino:
+    image: trinodb/trino:443
+    container_name: bigdata_trino_trino
+    depends_on:
+      - postgres
+      - clickhouse
+    ports:
+      - "18080:8080"
+    volumes:
+      - ./trino/etc:/etc/trino
+      - ./trino/sql:/scripts
+    networks:
+      - bigdata_net
+
+volumes:
+  postgres_data:
+  clickhouse_data:
+
+networks:
+  bigdata_net:
+    driver: bridge
