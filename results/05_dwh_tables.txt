@@ -1,0 +1,6 @@
+"dim_customer"
+"dim_date"
+"dim_product"
+"dim_store"
+"dim_supplier"
+"fact_sales"

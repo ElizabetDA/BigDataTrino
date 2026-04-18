@@ -1,0 +1,6 @@
+"dim_date","364"
+"dim_supplier","10000"
+"dim_customer","10000"
+"dim_product","10000"
+"dim_store","10000"
+"fact_sales","10000"

@@ -1,0 +1,6 @@
+"sales_products","3233"
+"sales_stores","10000"
+"sales_customers","10000"
+"sales_time","12"
+"product_quality","3233"
+"sales_suppliers","6295"
